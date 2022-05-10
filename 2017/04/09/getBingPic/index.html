@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sakitam-fdd.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"7HSJME72X5","apiKey":"bc7cc64b421f3c6adc942e70055bac28","indexName":"sakitam-fdd","hits":{"per_page":10},"labels":{"input_placeholder":"请输入关键字","hits_empty":"没有找到结果: ${query}","hits_stats":"${hits} 搜索时间 ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="写在前面大家都知道微软的Bing搜索引擎首页每天都会提供了一些有趣的图片，而这些图片很多都是有故事含义的，很多网友每天去访问bing首页都是为了这些图片而去的。而最近在搭建个人博客时的背景图片非常想使用一些漂亮的图片。当然我们可以使用图床和放置高清大图，但是考虑到不方便，所以想到使用bing的每日一图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态抓取bing搜索每日一图">
+<meta property="og:url" content="https://sakitam-fdd.github.io/2017/04/09/getBingPic/index.html">
+<meta property="og:site_name" content="星怀蓝梦">
+<meta property="og:description" content="写在前面大家都知道微软的Bing搜索引擎首页每天都会提供了一些有趣的图片，而这些图片很多都是有故事含义的，很多网友每天去访问bing首页都是为了这些图片而去的。而最近在搭建个人博客时的背景图片非常想使用一些漂亮的图片。当然我们可以使用图床和放置高清大图，但是考虑到不方便，所以想到使用bing的每日一图。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-04-09T14:00:20.000Z">
+<meta property="article:modified_time" content="2022-05-10T10:09:37.959Z">
+<meta property="article:author" content="sakitam-fdd">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://sakitam-fdd.github.io/2017/04/09/getBingPic/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>动态抓取bing搜索每日一图 | 星怀蓝梦</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星怀蓝梦</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">sakitam-fdd</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://sakitam-fdd.github.io/2017/04/09/getBingPic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sakitam-fdd">
+      <meta itemprop="description" content="我执意左转，你亦心如钢铁。在漫漫长旅，每个人都在孤独跋涉。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星怀蓝梦">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态抓取bing搜索每日一图
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-09 22:00:20" itemprop="dateCreated datePublished" datetime="2017-04-09T22:00:20+08:00">2017-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-05-10 18:09:37" itemprop="dateModified" datetime="2022-05-10T18:09:37+08:00">2022-05-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/nodejs/" itemprop="url" rel="index"><span itemprop="name">nodejs</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/04/09/getBingPic/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/09/getBingPic/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>大家都知道微软的Bing搜索引擎首页每天都会提供了一些有趣的图片，而这些图片很多都是有故事含义的，很多网友每天去访问bing首页都是为了这些图片而去的。<br>而最近在搭建个人博客时的背景图片非常想使用一些漂亮的图片。当然我们可以使用图床和放置高清大图，但是考虑到不方便，所以想到使用bing的每日一图。</p>
+<span id="more"></span>
+
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们打开开发者工具，可以看到有个请求是获取图片地址的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&#x27;http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=0&amp;n=1&amp;nc=1491746841662&amp;pid=hp&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果 url即为图片地址</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> res = &#123;</span><br><span class="line">              <span class="string">&quot;images&quot;</span>:[</span><br><span class="line">                  &#123;</span><br><span class="line">                      <span class="string">&quot;startdate&quot;</span>:<span class="string">&quot;20170408&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;fullstartdate&quot;</span>:<span class="string">&quot;201704081600&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;enddate&quot;</span>:<span class="string">&quot;20170409&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;url&quot;</span>:<span class="string">&quot;/az/hprichbg/rb/TulipFestival_ZH-CN8467334837_1920x1080.jpg&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;urlbase&quot;</span>:<span class="string">&quot;/az/hprichbg/rb/TulipFestival_ZH-CN8467334837&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;copyright&quot;</span>:<span class="string">&quot;弗农山上绽放的郁金香，华盛顿 (© Pete Saloutos/plainpicture)&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;copyrightlink&quot;</span>:<span class="string">&quot;/search?q=%e9%83%81%e9%87%91%e9%a6%99&amp;form=hpcapt&amp;mkt=zh-cn&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;quiz&quot;</span>:<span class="string">&quot;/search?q=Bing+homepage+quiz&amp;filters=WQOskey:%22HPQuiz_20170408_TulipFestival%22&amp;FORM=HPQUIZ&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;wp&quot;</span>:<span class="literal">true</span>,</span><br><span class="line">                      <span class="string">&quot;hsh&quot;</span>:<span class="string">&quot;2587e7cb9ba2b13b50dd321ca94f56b1&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;drk&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                      <span class="string">&quot;top&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                      <span class="string">&quot;bot&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                      <span class="string">&quot;hs&quot;</span>:[</span><br><span class="line">          </span><br><span class="line">                      ]</span><br><span class="line">                  &#125;</span><br><span class="line">              ],</span><br><span class="line">              <span class="string">&quot;tooltips&quot;</span>:&#123;</span><br><span class="line">                  <span class="string">&quot;loading&quot;</span>:<span class="string">&quot;Loading...&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;previous&quot;</span>:<span class="string">&quot;Previous image&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;next&quot;</span>:<span class="string">&quot;Next image&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;walle&quot;</span>:<span class="string">&quot;This image is not available to download as wallpaper.&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;walls&quot;</span>:<span class="string">&quot;Download this image. Use of this image is restricted to wallpaper only.&quot;</span></span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br></pre></td></tr></table></figure>
+
+<p>正常我们请求的话直接请求图片就可以了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&#x27;http://cn.bing.com/az/hprichbg/rb/TulipFestival_ZH-CN8467334837_1920x1080.jpg&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>但是不出所料的出现了跨域问题，所以就考虑到使用代理转发的方式来进行请求。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>客户端发起请求到nodejs服务器，nodejs收到后请求第三方服务器取得数据，返回给客户端。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client ajax --&gt; nodejs recived --&gt; nodejs send request --&gt; respone to client</span><br></pre></td></tr></table></figure>
+<h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><h3 id="不使用外部package的代码"><a href="#不使用外部package的代码" class="headerlink" title="不使用外部package的代码"></a>不使用外部package的代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by FDD on 2017/4/9.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> zlib = <span class="built_in">require</span>(<span class="string">&#x27;zlib&#x27;</span>);</span><br><span class="line"><span class="comment">// 创建http服务</span></span><br><span class="line"><span class="keyword">var</span> app = http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="comment">// 查询本机ip</span></span><br><span class="line">  <span class="comment">// var base = &#x27;/HPImageArchive.aspx?format=js&amp;idx=&#123;idx&#125;&amp;n=1&amp;nc=&#123;nc&#125;&amp;pid=hp&amp;video=1&#x27;;</span></span><br><span class="line">  <span class="comment">// var idx = parseInt(Math.random() * 10);</span></span><br><span class="line">  <span class="comment">// var nc = (new Date()).getTime();</span></span><br><span class="line">  <span class="comment">// var url = base.replace(&#x27;&#123;idx&#125;&#x27;, idx.toString()).replace(&#x27;&#123;nc&#125;&#x27;, nc.toString());</span></span><br><span class="line">  <span class="keyword">var</span> sreq = http.<span class="title function_">request</span>(&#123;</span><br><span class="line">    <span class="attr">host</span>: <span class="string">&#x27;cn.bing.com&#x27;</span>, <span class="comment">// 目标主机</span></span><br><span class="line">    <span class="attr">path</span>: req.<span class="property">url</span>, <span class="comment">// 目标路径</span></span><br><span class="line">    <span class="attr">gzip</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">method</span>: req.<span class="property">method</span> <span class="comment">// 请求方式</span></span><br><span class="line">  &#125;, <span class="keyword">function</span> (<span class="params">sres</span>) &#123;</span><br><span class="line">    <span class="comment">// console.log(req.url)</span></span><br><span class="line">    sres.<span class="title function_">pipe</span>(res);</span><br><span class="line">    sres.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/POST|PUT/i</span>.<span class="title function_">test</span>(req.<span class="property">method</span>)) &#123;</span><br><span class="line">    req.<span class="title function_">pipe</span>(sreq);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    sreq.<span class="title function_">end</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 访问127.0.0.1:3001查看效果</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3001</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server started on 127.0.0.1:3001&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="使用superAgent的代码"><a href="#使用superAgent的代码" class="headerlink" title="使用superAgent的代码"></a>使用superAgent的代码</h3><p>注意这一段代码是为了解决返回乱码和跨域问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html;charset=utf-8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="comment">// 创建http服务</span></span><br><span class="line"><span class="keyword">var</span> app = http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html;charset=utf-8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 使用了superagent来发起请求</span></span><br><span class="line">  <span class="keyword">var</span> charset = <span class="built_in">require</span>(<span class="string">&#x27;superagent-charset&#x27;</span>);</span><br><span class="line">  <span class="keyword">var</span> superagent = <span class="built_in">require</span>(<span class="string">&#x27;superagent&#x27;</span>);</span><br><span class="line">  <span class="title function_">charset</span>(superagent);</span><br><span class="line">  <span class="comment">// 查询本机ip，这里需要根据实际情况选择get还是post</span></span><br><span class="line">  <span class="keyword">var</span> base = <span class="string">&#x27;http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=&#123;idx&#125;&amp;n=1&amp;nc=&#123;nc&#125;&amp;pid=hp&amp;video=1&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> idx = <span class="built_in">parseInt</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>);</span><br><span class="line">  <span class="keyword">var</span> nc = (<span class="keyword">new</span> <span class="title class_">Date</span>()).<span class="title function_">getTime</span>();</span><br><span class="line">  <span class="keyword">var</span> url = base.<span class="title function_">replace</span>(<span class="string">&#x27;&#123;idx&#125;&#x27;</span>, idx.<span class="title function_">toString</span>()).<span class="title function_">replace</span>(<span class="string">&#x27;&#123;nc&#125;&#x27;</span>, nc.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">var</span> sreq = superagent.<span class="title function_">get</span>(url);</span><br><span class="line">  sreq.<span class="title function_">charset</span>(<span class="string">&#x27;utf-8&#x27;</span>);</span><br><span class="line">  <span class="comment">// JSON.stringify(res);</span></span><br><span class="line">  sreq.<span class="title function_">pipe</span>(res);</span><br><span class="line">  sreq.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 访问127.0.0.1:3002查看效果</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3002</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server started on 127.0.0.1:3002&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="使用Express-superAgent的代码"><a href="#使用Express-superAgent的代码" class="headerlink" title="使用Express + superAgent的代码"></a>使用Express + superAgent的代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by FDD on 2017/4/9.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="comment">// 使用了superagent来发起请求</span></span><br><span class="line">  <span class="keyword">var</span> superagent = <span class="built_in">require</span>(<span class="string">&#x27;superagent&#x27;</span>);</span><br><span class="line">  <span class="comment">// 查询本机ip，这里需要根据实际情况选择get还是post</span></span><br><span class="line">  <span class="keyword">var</span> base = <span class="string">&#x27;http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=&#123;idx&#125;&amp;n=1&amp;nc=&#123;nc&#125;&amp;pid=hp&amp;video=1&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> idx = <span class="built_in">parseInt</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>);</span><br><span class="line">  <span class="keyword">var</span> nc = (<span class="keyword">new</span> <span class="title class_">Date</span>()).<span class="title function_">getTime</span>();</span><br><span class="line">  <span class="keyword">var</span> url = base.<span class="title function_">replace</span>(<span class="string">&#x27;&#123;idx&#125;&#x27;</span>, idx.<span class="title function_">toString</span>()).<span class="title function_">replace</span>(<span class="string">&#x27;&#123;nc&#125;&#x27;</span>, nc.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">var</span> sreq = superagent.<span class="title function_">get</span>(url);</span><br><span class="line">  sreq.<span class="title function_">pipe</span>(res);</span><br><span class="line">  sreq.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3001</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express started on 127.0.0.1:3001&#x27;</span>);</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/04/08/travis/" rel="prev" title="利用travis持续集成工具自动部署博客">
+      <i class="fa fa-chevron-left"></i> 利用travis持续集成工具自动部署博客
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/05/18/postgis/" rel="next" title="POSTGIS安装使用">
+      POSTGIS安装使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">范例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8package%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.1.</span> <span class="nav-text">不使用外部package的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8superAgent%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.2.</span> <span class="nav-text">使用superAgent的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Express-superAgent%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用Express + superAgent的代码</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sakitam-fdd"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sakitam-fdd</p>
+  <div class="site-description" itemprop="description">我执意左转，你亦心如钢铁。在漫漫长旅，每个人都在孤独跋涉。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sakitam-fdd" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sakitam-fdd" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/smilefdd@gmail.com" title="E-Mail → smilefdd@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/sakitam-fdd" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;sakitam-fdd" rel="noopener" target="_blank"><i class="fa-zhihu fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备18015672号-1 京ICP备18015672号-2 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sakitam-fdd</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://sakitam-fdd.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://sakitam-fdd.github.io/2017/04/09/getBingPic/";
+    this.page.identifier = "2017/04/09/getBingPic/";
+    this.page.title = "动态抓取bing搜索每日一图";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://sakitam-fdd.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

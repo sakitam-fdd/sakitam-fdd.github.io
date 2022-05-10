@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>怎样快速搭建一个博客</title>
+    <url>/2017/04/08/blogStart/</url>
+    <content><![CDATA[<h1 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h1><p>hexo是一款基于Node.js的静态博客框架，他可以方便的生成静态网页，<br>而且不需要你去关注页面布局这些问题，只需要专注于内容。</p>
+<span id="more"></span>
+
+<h1 id="必要环境"><a href="#必要环境" class="headerlink" title="必要环境"></a>必要环境</h1><ul>
+<li><p>首先要安装 <a href="https://nodejs.org/en/download/">Node.js</a>， Node.js 自带了软件包管理器 npm，hexo 需要 Node.js v0.6 以上支持，建议使用最新版 Node.js。</p>
+</li>
+<li><p>装完node后可以测试一下是否安装成功,命令窗口执行下面命令能正确输出版本号则安装成功。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure></li>
+<li><p>配置完之后建议将包地址换为国内淘宝镜像源。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line">// 配置后可通过下面方式来验证是否成功</span><br><span class="line">npm config get registry</span><br><span class="line">// 或npm info express</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局安装hexo脚手架工具和hexo</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i -g hexo-cli</span><br><span class="line">npm i -g hexo</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>常用命令</li>
+</ul>
+<blockquote>
+<p>1、 help ： 查看帮助信息<br>  2、 init [文件夹名] ： 创建一个hexo项目，不指定文件夹名，则在当前目录创建<br>  3、 version ： 查看hexo的版本<br>  4、 –config config-path ：指定配置文件，代替默认的_config.yml<br>  5、 –cwd cwd-path ：自定义当前工作目录<br>  5、 –debug ：调试模式，输出所有日志信息<br>  6、 –safe ：安全模式，禁用所有的插件和脚本<br>  7、 –silent ：无日志输出模式<br>  8、 generate ：编译输出静态文件<br>  9、 clean ：清空编译后的缓存和文件<br>  10、server ：开启本地服务器<br>  11、deploy ：部署</p>
+</blockquote>
+<h1 id="开始创建"><a href="#开始创建" class="headerlink" title="开始创建"></a>开始创建</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init myBlog</span><br></pre></td></tr></table></figure>
+
+<p>执行上述命令后会创建一个模板出来，剩下的就需要自己去改了</p>
+<h1 id="添加文章"><a href="#添加文章" class="headerlink" title="添加文章"></a>添加文章</h1><p>文章会自动生成在博客目录下source&#x2F;_posts&#x2F;start.md</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;start&quot;</span>  <span class="comment">#新建博文,其中start是博文题目</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 怎样快速搭建一个博客</span><br><span class="line"><span class="built_in">date</span>: 2017-04-08 12:11:50</span><br><span class="line">tags: hexo</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p>Hexo提供了官网的主题, 初始化hexo时也会自动生成一个主题, Hexo还支持个性定制主题, 可以根据自己的喜好对主题进行修改, 更多主题可以在官网中找到<a href="https://hexo.io/themes/">themes</a><br>更改方法如下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line"><span class="comment">#在./_config.yml，修改主题为next</span></span><br><span class="line">theme: writing</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看本地效果</span></span><br><span class="line">hexo g       <span class="comment">#hexo generate简写</span></span><br><span class="line">hexo s       <span class="comment">#hexo server简写</span></span><br></pre></td></tr></table></figure>
+<p>更多设置请查看<a href="http://theme-next.iissnan.com/">next主题官网</a></p>
+<h1 id="部署到github"><a href="#部署到github" class="headerlink" title="部署到github"></a>部署到github</h1><p>注意修改配置文件中的deploy配置。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repository: https://github.com/sakitam-fdd/sakitam-fdd.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>然后执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy  <span class="comment">#进行部署</span></span><br><span class="line"></span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> E:\codeRepository\github\website/.deploy/.git/</span><br><span class="line">[master (root-commit) bb3079b] First commit</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 placeholder</span><br><span class="line">[info] Clearing .deploy folder...</span><br><span class="line">[info] Copying files from public folder...</span><br><span class="line">[master 6e24e8d] Site updated: 2017-04-08 11:16:23</span><br><span class="line"> 172 files changed, 34969 insertions(+)</span><br><span class="line"> create mode 100644 2017/04/08/Hello-World/index.html</span><br><span class="line"> ...</span><br><span class="line"> create mode 100644 <span class="string">&quot;tags/\345\277\203\350\267\257\346\234\255\350\256\260/index.html&quot;</span></span><br><span class="line">To git@github.com/sakitam-fdd/sakitam-fdd.github.io.git</span><br><span class="line"> + 11237d0...6e24e8d master -&gt; master (forced update)</span><br><span class="line">Branch master <span class="built_in">set</span> up to track remote branch master from git@github.com/sakitam-fdd/sakitam-fdd.github.io.git</span><br><span class="line">[info] Deploy <span class="keyword">done</span>: github</span><br><span class="line"></span><br><span class="line"><span class="comment">#表示部署成功</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>前端</category>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>deepin下前端开发环境搭建</title>
+    <url>/2017/12/11/deepin/</url>
+    <content><![CDATA[<h1 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h1><p>deepin下前端相关开发环境搭建，包括nodejs安装，webstorm安装，jdk安装,git安装等。</p>
+<span id="more"></span>
+
+<h1 id="nodejs安装教程"><a href="#nodejs安装教程" class="headerlink" title="nodejs安装教程"></a>nodejs安装教程</h1><blockquote>
+</blockquote>
+<ul>
+<li><p>下载源码：<a href="https://nodejs.org/en/download/%EF%BC%8C%E4%BC%98%E5%85%88%E9%80%89%E6%8B%A9%E9%95%BF%E6%9C%9F%E6%94%AF%E6%8C%81%E7%89%88%EF%BC%8C%E9%80%89%E6%8B%A9Source">https://nodejs.org/en/download/，优先选择长期支持版，选择Source</a> Code下载</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v8.9.3/node-v8.9.3.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压并安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 解压源码压缩包</span><br><span class="line">sudo tar xvf node-v8.9.3.tar.gz</span><br><span class="line"></span><br><span class="line">// 切换到解压后的文件夹内</span><br><span class="line"><span class="built_in">cd</span> node-v8.9.3</span><br><span class="line"></span><br><span class="line">// 开始安装，编译大概会有20分钟之久</span><br><span class="line">sudo ./configure </span><br><span class="line">sudo make </span><br><span class="line">sudo make install </span><br><span class="line"></span><br><span class="line">// 查看当前安装的Node的版本 </span><br><span class="line">node -v </span><br><span class="line">v8.9.3</span><br><span class="line"></span><br><span class="line">// 查看NPM版本</span><br><span class="line">npm -v</span><br><span class="line">5.5.1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="git安装教程"><a href="#git安装教程" class="headerlink" title="git安装教程"></a>git安装教程</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Debian/Ubuntu</span><br><span class="line">For the latest stable version <span class="keyword">for</span> your release of Debian/Ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># apt-get install git</span></span><br><span class="line">For Ubuntu, this PPA provides the latest stable upstream Git version</span><br><span class="line"></span><br><span class="line"><span class="comment"># add-apt-repository ppa:git-core/ppa # apt update; apt install git</span></span><br><span class="line">Fedora</span><br><span class="line"><span class="comment"># yum install git (up to Fedora 21)</span></span><br><span class="line"><span class="comment"># dnf install git (Fedora 22 and later)</span></span><br><span class="line">Gentoo</span><br><span class="line"><span class="comment"># emerge --ask --verbose dev-vcs/git</span></span><br><span class="line">Arch Linux</span><br><span class="line"><span class="comment"># pacman -S git</span></span><br><span class="line">openSUSE</span><br><span class="line"><span class="comment"># zypper install git</span></span><br><span class="line">Mageia</span><br><span class="line"><span class="comment"># urpmi git</span></span><br><span class="line">Nix/NixOS</span><br><span class="line"><span class="comment"># nix-env -i git</span></span><br><span class="line">FreeBSD</span><br><span class="line"><span class="comment"># pkg install git</span></span><br><span class="line">Solaris 9/10/11 (OpenCSW)</span><br><span class="line"><span class="comment"># pkgutil -i git</span></span><br><span class="line">Solaris 11 Express</span><br><span class="line"><span class="comment"># pkg install developer/versioning/git</span></span><br><span class="line">OpenBSD</span><br><span class="line"><span class="comment"># pkg_add git</span></span><br><span class="line">Alpine</span><br><span class="line">$ apk add git</span><br></pre></td></tr></table></figure>
+
+<h1 id="JDK环境配置"><a href="#JDK环境配置" class="headerlink" title="JDK环境配置"></a>JDK环境配置</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">下载安装Oracle JDK</span><br><span class="line">下载JDK的tar.gz包</span><br><span class="line"></span><br><span class="line">解压压缩包</span><br><span class="line">进入下载目录</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~/Download</span><br><span class="line">解压tar.gz包</span><br><span class="line"></span><br><span class="line">tar -zxvf jdk-8u152-linux-x64.tar.gz</span><br><span class="line">安装JDK</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> jdk1.8.0_152/  /usr/lib/jvm/jdk1.8.0_152</span><br><span class="line"></span><br><span class="line">JDK环境变量配置</span><br><span class="line">修改配置文件</span><br><span class="line">sudo vim /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>在文件的末尾增加内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/usr/lib/jvm/jdk1.8.0_152</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span> </span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br></pre></td></tr></table></figure>
+
+<p>注意jdk的路径和版本</p>
+<p>使配置生效</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+
+<p>配置默认JDK<br>创建新的java版本<br>在shell用update-alternatives命令创建新的系统命令链接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo update-alternatives --install /usr/bin/javac javac  /usr/lib/jvm/jdk1.8.0_152/bin/javac  1171</span><br><span class="line">sudo update-alternatives --install /usr/bin/java  java  /usr/lib/jvm/jdk1.8.0_152/bin/java  1171</span><br><span class="line">sudo update-alternatives --install /usr/bin/jar jar /usr/lib/jvm/jdk1.8.0_152/bin/jar 1171   </span><br><span class="line">sudo update-alternatives --install /usr/bin/javah javah /usr/lib/jvm/jdk1.8.0_152/bin/javah 1171   </span><br><span class="line">sudo update-alternatives --install /usr/bin/javap javap /usr/lib/jvm/jdk1.8.0_152/bin/javap 1171 </span><br></pre></td></tr></table></figure>
+
+<p>update-alternatives是ubuntu系统中专门维护系统命令链接符的工具，后面的1171是用来指定当前链接的优先级，最高的优先级将自动被设置为默认版本。</p>
+<p>可以用下面的命令查看JAVA的版本和优先级：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-alternatives --display java</span><br></pre></td></tr></table></figure>
+
+<p>选择JAVA的版本<br>执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update-alternatives --config java</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p> 有 2 个候选项可用于替换 java (提供 &#x2F;usr&#x2F;bin&#x2F;java)。</p>
+<h2 id="选择-路径-优先级-状态"><a href="#选择-路径-优先级-状态" class="headerlink" title="  选择       路径                                          优先级  状态"></a>  选择       路径                                          优先级  状态</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* 0            /usr/lib/jvm/jdk1.8.0_152/bin/java               1171      自动模式</span><br><span class="line">  1            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java   1081      手动模式</span><br><span class="line">  2            /usr/lib/jvm/jdk1.8.0_152/bin/java               1171      手动模式</span><br></pre></td></tr></table></figure>
+
+<p>要维持当前值[*]请按&lt;回车键&gt;，或者键入选择的编号：</p>
+<p>上图可以看到刚刚配置的JDK 1.8优先级配置为1171，高于原有的1081，所以被自动设置为默认。</p>
+<p>测试<br>查看JAVA版本<br>在shell上执行下面命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<p>如果得到如下输出，证明JDK已经成功安装配置了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Picked up _JAVA_OPTIONS:   -Dawt.useSystemAAFontSettings=gasp</span><br><span class="line">java version <span class="string">&quot;1.8.0_152&quot;</span></span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_152-b16)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.152-b16, mixed mode)</span><br></pre></td></tr></table></figure>
+
+<h1 id="webstorm安装"><a href="#webstorm安装" class="headerlink" title="webstorm安装"></a>webstorm安装</h1><blockquote>
+<p>官网：<a href="http://www.jetbrains.com/webstorm/">http://www.jetbrains.com/webstorm/</a></p>
+</blockquote>
+<p>安装过程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">解压</span><br><span class="line"></span><br><span class="line">tar zxvf WebStorm-2017.3.tar.gz</span><br><span class="line">移动</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> WebStorm-173.3727.108/ /opt/WebStorm/</span><br><span class="line">创建链接</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">ln</span> -s /opt/WebStorm/ /opt/WebStorm</span><br><span class="line">启动</span><br><span class="line"></span><br><span class="line">/opt/WebStorm/bin/webstorm.sh</span><br><span class="line">添加Dash图标</span><br></pre></td></tr></table></figure>
+
+<h2 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h2><blockquote>
+<p><a href="http://www.imsxm.com/jetbrains-license-server.html">http://www.imsxm.com/jetbrains-license-server.html</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>nodejs</tag>
+        <tag>soft</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动态抓取bing搜索每日一图</title>
+    <url>/2017/04/09/getBingPic/</url>
+    <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>大家都知道微软的Bing搜索引擎首页每天都会提供了一些有趣的图片，而这些图片很多都是有故事含义的，很多网友每天去访问bing首页都是为了这些图片而去的。<br>而最近在搭建个人博客时的背景图片非常想使用一些漂亮的图片。当然我们可以使用图床和放置高清大图，但是考虑到不方便，所以想到使用bing的每日一图。</p>
+<span id="more"></span>
+
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们打开开发者工具，可以看到有个请求是获取图片地址的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&#x27;http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=0&amp;n=1&amp;nc=1491746841662&amp;pid=hp&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果 url即为图片地址</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> res = &#123;</span><br><span class="line">              <span class="string">&quot;images&quot;</span>:[</span><br><span class="line">                  &#123;</span><br><span class="line">                      <span class="string">&quot;startdate&quot;</span>:<span class="string">&quot;20170408&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;fullstartdate&quot;</span>:<span class="string">&quot;201704081600&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;enddate&quot;</span>:<span class="string">&quot;20170409&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;url&quot;</span>:<span class="string">&quot;/az/hprichbg/rb/TulipFestival_ZH-CN8467334837_1920x1080.jpg&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;urlbase&quot;</span>:<span class="string">&quot;/az/hprichbg/rb/TulipFestival_ZH-CN8467334837&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;copyright&quot;</span>:<span class="string">&quot;弗农山上绽放的郁金香，华盛顿 (© Pete Saloutos/plainpicture)&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;copyrightlink&quot;</span>:<span class="string">&quot;/search?q=%e9%83%81%e9%87%91%e9%a6%99&amp;form=hpcapt&amp;mkt=zh-cn&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;quiz&quot;</span>:<span class="string">&quot;/search?q=Bing+homepage+quiz&amp;filters=WQOskey:%22HPQuiz_20170408_TulipFestival%22&amp;FORM=HPQUIZ&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;wp&quot;</span>:<span class="literal">true</span>,</span><br><span class="line">                      <span class="string">&quot;hsh&quot;</span>:<span class="string">&quot;2587e7cb9ba2b13b50dd321ca94f56b1&quot;</span>,</span><br><span class="line">                      <span class="string">&quot;drk&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                      <span class="string">&quot;top&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                      <span class="string">&quot;bot&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                      <span class="string">&quot;hs&quot;</span>:[</span><br><span class="line">          </span><br><span class="line">                      ]</span><br><span class="line">                  &#125;</span><br><span class="line">              ],</span><br><span class="line">              <span class="string">&quot;tooltips&quot;</span>:&#123;</span><br><span class="line">                  <span class="string">&quot;loading&quot;</span>:<span class="string">&quot;Loading...&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;previous&quot;</span>:<span class="string">&quot;Previous image&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;next&quot;</span>:<span class="string">&quot;Next image&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;walle&quot;</span>:<span class="string">&quot;This image is not available to download as wallpaper.&quot;</span>,</span><br><span class="line">                  <span class="string">&quot;walls&quot;</span>:<span class="string">&quot;Download this image. Use of this image is restricted to wallpaper only.&quot;</span></span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br></pre></td></tr></table></figure>
+
+<p>正常我们请求的话直接请求图片就可以了</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&#x27;http://cn.bing.com/az/hprichbg/rb/TulipFestival_ZH-CN8467334837_1920x1080.jpg&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>但是不出所料的出现了跨域问题，所以就考虑到使用代理转发的方式来进行请求。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>客户端发起请求到nodejs服务器，nodejs收到后请求第三方服务器取得数据，返回给客户端。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">client ajax --&gt; nodejs recived --&gt; nodejs send request --&gt; respone to client</span><br></pre></td></tr></table></figure>
+<h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><h3 id="不使用外部package的代码"><a href="#不使用外部package的代码" class="headerlink" title="不使用外部package的代码"></a>不使用外部package的代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by FDD on 2017/4/9.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> zlib = <span class="built_in">require</span>(<span class="string">&#x27;zlib&#x27;</span>);</span><br><span class="line"><span class="comment">// 创建http服务</span></span><br><span class="line"><span class="keyword">var</span> app = http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="comment">// 查询本机ip</span></span><br><span class="line">  <span class="comment">// var base = &#x27;/HPImageArchive.aspx?format=js&amp;idx=&#123;idx&#125;&amp;n=1&amp;nc=&#123;nc&#125;&amp;pid=hp&amp;video=1&#x27;;</span></span><br><span class="line">  <span class="comment">// var idx = parseInt(Math.random() * 10);</span></span><br><span class="line">  <span class="comment">// var nc = (new Date()).getTime();</span></span><br><span class="line">  <span class="comment">// var url = base.replace(&#x27;&#123;idx&#125;&#x27;, idx.toString()).replace(&#x27;&#123;nc&#125;&#x27;, nc.toString());</span></span><br><span class="line">  <span class="keyword">var</span> sreq = http.<span class="title function_">request</span>(&#123;</span><br><span class="line">    <span class="attr">host</span>: <span class="string">&#x27;cn.bing.com&#x27;</span>, <span class="comment">// 目标主机</span></span><br><span class="line">    <span class="attr">path</span>: req.<span class="property">url</span>, <span class="comment">// 目标路径</span></span><br><span class="line">    <span class="attr">gzip</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">method</span>: req.<span class="property">method</span> <span class="comment">// 请求方式</span></span><br><span class="line">  &#125;, <span class="keyword">function</span> (<span class="params">sres</span>) &#123;</span><br><span class="line">    <span class="comment">// console.log(req.url)</span></span><br><span class="line">    sres.<span class="title function_">pipe</span>(res);</span><br><span class="line">    sres.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/POST|PUT/i</span>.<span class="title function_">test</span>(req.<span class="property">method</span>)) &#123;</span><br><span class="line">    req.<span class="title function_">pipe</span>(sreq);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    sreq.<span class="title function_">end</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 访问127.0.0.1:3001查看效果</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3001</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server started on 127.0.0.1:3001&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="使用superAgent的代码"><a href="#使用superAgent的代码" class="headerlink" title="使用superAgent的代码"></a>使用superAgent的代码</h3><p>注意这一段代码是为了解决返回乱码和跨域问题</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html;charset=utf-8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="comment">// 创建http服务</span></span><br><span class="line"><span class="keyword">var</span> app = http.<span class="title function_">createServer</span>(<span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html;charset=utf-8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 使用了superagent来发起请求</span></span><br><span class="line">  <span class="keyword">var</span> charset = <span class="built_in">require</span>(<span class="string">&#x27;superagent-charset&#x27;</span>);</span><br><span class="line">  <span class="keyword">var</span> superagent = <span class="built_in">require</span>(<span class="string">&#x27;superagent&#x27;</span>);</span><br><span class="line">  <span class="title function_">charset</span>(superagent);</span><br><span class="line">  <span class="comment">// 查询本机ip，这里需要根据实际情况选择get还是post</span></span><br><span class="line">  <span class="keyword">var</span> base = <span class="string">&#x27;http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=&#123;idx&#125;&amp;n=1&amp;nc=&#123;nc&#125;&amp;pid=hp&amp;video=1&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> idx = <span class="built_in">parseInt</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>);</span><br><span class="line">  <span class="keyword">var</span> nc = (<span class="keyword">new</span> <span class="title class_">Date</span>()).<span class="title function_">getTime</span>();</span><br><span class="line">  <span class="keyword">var</span> url = base.<span class="title function_">replace</span>(<span class="string">&#x27;&#123;idx&#125;&#x27;</span>, idx.<span class="title function_">toString</span>()).<span class="title function_">replace</span>(<span class="string">&#x27;&#123;nc&#125;&#x27;</span>, nc.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">var</span> sreq = superagent.<span class="title function_">get</span>(url);</span><br><span class="line">  sreq.<span class="title function_">charset</span>(<span class="string">&#x27;utf-8&#x27;</span>);</span><br><span class="line">  <span class="comment">// JSON.stringify(res);</span></span><br><span class="line">  sreq.<span class="title function_">pipe</span>(res);</span><br><span class="line">  sreq.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 访问127.0.0.1:3002查看效果</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3002</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server started on 127.0.0.1:3002&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="使用Express-superAgent的代码"><a href="#使用Express-superAgent的代码" class="headerlink" title="使用Express + superAgent的代码"></a>使用Express + superAgent的代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by FDD on 2017/4/9.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="comment">// 使用了superagent来发起请求</span></span><br><span class="line">  <span class="keyword">var</span> superagent = <span class="built_in">require</span>(<span class="string">&#x27;superagent&#x27;</span>);</span><br><span class="line">  <span class="comment">// 查询本机ip，这里需要根据实际情况选择get还是post</span></span><br><span class="line">  <span class="keyword">var</span> base = <span class="string">&#x27;http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=&#123;idx&#125;&amp;n=1&amp;nc=&#123;nc&#125;&amp;pid=hp&amp;video=1&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> idx = <span class="built_in">parseInt</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>);</span><br><span class="line">  <span class="keyword">var</span> nc = (<span class="keyword">new</span> <span class="title class_">Date</span>()).<span class="title function_">getTime</span>();</span><br><span class="line">  <span class="keyword">var</span> url = base.<span class="title function_">replace</span>(<span class="string">&#x27;&#123;idx&#125;&#x27;</span>, idx.<span class="title function_">toString</span>()).<span class="title function_">replace</span>(<span class="string">&#x27;&#123;nc&#125;&#x27;</span>, nc.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">var</span> sreq = superagent.<span class="title function_">get</span>(url);</span><br><span class="line">  sreq.<span class="title function_">pipe</span>(res);</span><br><span class="line">  sreq.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3001</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express started on 127.0.0.1:3001&#x27;</span>);</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端</category>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>POSTGIS安装使用</title>
+    <url>/2017/05/18/postgis/</url>
+    <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>PostgreSQL 是一种对象-关系型数据库管理系统（ORDBMS），也是目前功能最强大、特性最丰富和最复杂的自由软件数据库系统。它起源于伯克利（BSD）的数据库目前功能最强大、特性最丰富和最复杂的研究计划，目前是最重要的开源数据库产品开发项目之一， 有着非常广泛的用户。</p>
+<span id="more"></span>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1>]]></content>
+      <categories>
+        <category>GIS</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>GIS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用webpack4手动构建react项目</title>
+    <url>/2018/02/26/startReact/</url>
+    <content><![CDATA[<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h1><p>  Webpack 是一个前端资源加载&#x2F;打包工具。它将根据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源。<br>自从 <code>gulp，Grunt</code> 等一些前端工具兴起后，才真正把前端工程化引入，不仅简化了开发流程，更引入了一些前沿思想。</p>
+<span id="more"></span>
+
+<h2 id="webpack-工作方式"><a href="#webpack-工作方式" class="headerlink" title="webpack 工作方式"></a>webpack 工作方式</h2><p>   把你的项目当做一个整体，通过一个给定的主文件（entry）（如：index.js），Webpack将从这个文件开始找到你的项目的所有<br>依赖文件，使用loaders处理它们，最后打包为一个（或多个）浏览器可识别的JavaScript文件。</p>
+<h2 id="webpack-4"><a href="#webpack-4" class="headerlink" title="webpack 4"></a>webpack 4</h2><p>  实际上在webpack 4之前，webpack有着很多黑点，也催生了后期<code>rollup</code>和<code>parcel</code>。而<code>webpack</code>主要问题存在于：</p>
+<ul>
+<li>配置过于复杂。</li>
+<li>文档缺失，尤其中文文档。</li>
+<li>编译、打包速度过慢。等</li>
+</ul>
+<p>原来对于前端来说，打开编辑器就可以撸代码的日子一去不复返，大概配置前端开发环境就需要一天吧 :smile: 。<br>对于 <code>webpack4</code> 来说，这一个大版本升级做了诸多优化，主要包含如下：</p>
+<ul>
+<li><p>环境: 不再支持 <code>node.js 4</code>, 源代码已升级到更高的<code>ecmascript</code>版本。</p>
+</li>
+<li><p>用法: </p>
+<ul>
+<li>您现在必须在<code>production or development</code>两种模式之间选择（<code>mode or --mode</code>)</li>
+<li><code>production</code>默认提供所有可能的优化，如代码压缩&#x2F;作用域提升等</li>
+<li><code>development</code>模式下允许注释和 <code>eval</code> 下的 <code>source maps</code>。</li>
+<li><code>production</code>模式下不支持 <code>watch</code>，<code>development</code>模式下针对代码变化后的重新打包进行了优化。</li>
+<li><code>production</code>模式下默认提供模块合并（作用域提升）。</li>
+<li>你可以配置 <code>optimization</code> 自定义模式。</li>
+<li><code>process.env.NODE_ENV</code> 的值不需要再定义，默认对应当前模式。</li>
+<li>并且可以设置 <code>none</code> 模式可以禁用所有的功能。</li>
+</ul>
+</li>
+<li><p>语法</p>
+<ul>
+<li>在 webpack 4 中，import() 会返回一个带命名空间(namespace)的对象，这对 ES Module 不会有影响，但对于遵循 commonjs 规范的模块则会加一层包裹。</li>
+<li>在<code>webpack 4</code> 中如果你使用 <code>import（）</code> 导入 <code>CommonJs</code> 模块可能会破坏你的代码。</li>
+</ul>
+</li>
+<li><p>配置</p>
+<blockquote>
+<p>删除了一些常用内置插件：</p>
+</blockquote>
+<ul>
+<li>NoEmitOnErrorsPlugin -&gt; optimization.noEmitOnErrors (生产模式默认)</li>
+<li>ModuleConcatenationPlugin -&gt; optimization.concatenateModules （生产模式默认）</li>
+<li>NamedModulesPlugin -&gt; optimization.namedModules （开发模式默认）。</li>
+<li>删除了 CommonsChunkPlugin，取而代之的是 optimization.splitChunks 和 optimization.runtimeChunk，这提供了细粒度的缓存策略控制</li>
+</ul>
+</li>
+<li><p>JSON处理</p>
+<ul>
+<li><p>webpack现在默认处理JSON。</p>
+<ul>
+<li>将JSON通过加载器转换为JS时，可能需要添加类型：<code>javascript / auto</code>.</li>
+<li>还支持对 JSON 的 Tree Shaking。当使用 ESM 语法 import json 时，webpack 会处理掉JSON Module 中未使用的导出。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>优化</p>
+<ul>
+<li>uglifyjs-webpack-plugin 发布 v1，支持 ES2015</li>
+<li>使用 JSONP 数组来代替 JSONP 函数 –&gt; 异步支持</li>
+</ul>
+</li>
+<li><p>重大功能性更新</p>
+<ol>
+<li>Modules(模块)：</li>
+</ol>
+<ul>
+<li>webpack 现在支持以下文件类型：<ul>
+<li>javascript&#x2F;auto: (webpack 3中的默认类型)支持所有的JS模块系统：CommonJS、AMD、ESM</li>
+<li>javascript&#x2F;esm: EcmaScript 模块，在其他的模块系统中不可用。</li>
+<li>javascript&#x2F;dynamic: 仅支持 CommonJS &amp; AMD，ES moudle 不可用。</li>
+<li>json: 可通过 require 和 import 导入的 JSON 格式的数据(默认为 .json 的文件)</li>
+<li>webassembly&#x2F;experimental: WebAssembly 模块(试验阶段，默认为 .wasm 的文件)。</li>
+</ul>
+</li>
+<li>与<code>javascript/auto</code>相比，<code>javascript/esm</code>更严格地处理<code>ESM</code>文档<ul>
+<li>导入的名称需要在导入的模块上存在。</li>
+<li>动态模块（非esm，即CommonJs）只能通过<code>default</code>导入，其他方式（包括命名空间导入）都会发出错误。</li>
+</ul>
+</li>
+<li>以后缀名为<code>.mjs</code>的模块默认为 <code>javascript/esm</code>。</li>
+<li>WebAssembly模块<ul>
+<li>可以导入其他模块（JS和WASM）。</li>
+<li>从<code>WebAssembly</code>模块导出的模块将通过ESM导入进行验证。</li>
+<li>只能用于异步模块。</li>
+<li>WebAssembly为实验性功能。</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>Optimization(优化):</li>
+</ol>
+<ul>
+<li>sideEffects: <code>package.json</code>现在支持配置<code>false</code>。<ul>
+<li><code>package.json</code>中的<code>sideEffects</code>还支持<code>glob</code>表达式和<code>glob</code>表达式的数组。</li>
+</ul>
+</li>
+<li>使用 <code>JSONP</code> 数组替代 <code>JSONP</code> 函数，异步脚本支持，不再依赖于加载顺序。</li>
+<li>引入了新的<code>optimization.splitChunks</code>选项 <a href="https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693">detail</a>。</li>
+<li>无用代码现在由<code>webpack</code>自动处理。<ul>
+<li>Before: 在 <code>Uglify</code> 中处理无用代码。</li>
+<li>现在： <code>webpack</code> 默认处理。</li>
+<li>这可以防止无用代码中存在<code>import()</code>时出现错误。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>Syntax(语法):</li>
+</ol>
+<ul>
+<li>通过<code>import()</code>可以支持<code>webpackInclude</code>和<code>webpackExclude</code>。它们允许在使用动态表达式过滤文件。</li>
+<li>减少使用<code>System.import()</code>现在<code> 使用</code>System.import()&#96;会发出警告。<ul>
+<li>你可以配置 <code>Rule.parser.system: true</code> 禁用警告。</li>
+<li>配置 <code>Rule.parser.system: false</code>可以禁用 <code>System.import</code>。</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>Configuration(配置)：</li>
+</ol>
+<ul>
+<li>现在可以使用<code>module.rules[].resolve</code>来配置解析。它将合并到全局配置中。</li>
+<li>在<code>production</code> 模式，<code>optimization.minimize</code> 默认打开； <code>development</code> 模式默认关闭。</li>
+</ul>
+<ol start="5">
+<li>Usage(用法)：</li>
+</ol>
+<ul>
+<li>部分插件配置现在将被验证。</li>
+<li><code>CLI</code>已转移到<code>webpack-cli</code>，您需要安装<code>webpack-cli</code>才能使用<code>CLI</code>。</li>
+<li>[]</li>
+</ul>
+<ol start="6">
+<li>Performance(性能提升)：</li>
+</ol>
+<ul>
+<li><code>UglifyJs</code> 现在默认进行缓存。</li>
+<li>多重性能改进，特别是对于频繁修改的文件的重新编译。</li>
+<li>对于<code>RemoveParentModulesPlugin</code>的性能改进。</li>
+</ul>
+<ol start="7">
+<li>Stats(统计)：</li>
+</ol>
+<ul>
+<li>统计信息可以显示嵌套中的模块。</li>
+</ul>
+</li>
+</ul>
+<p>其他更多信息可以查看 <a href="https://github.com/webpack/webpack/releases">releases</a>。</p>
+<h1 id="从-angular1-x-到-vue-再到-react-的心路历程"><a href="#从-angular1-x-到-vue-再到-react-的心路历程" class="headerlink" title="从 angular1.x 到 vue 再到 react 的心路历程"></a>从 angular1.x 到 vue 再到 react 的心路历程</h1><p>  网上有太多的文章去讨论目前前端三大框架的优缺点，其实有些时候可以说适合你的才是<br>最好的，没必要过多的纠结好或不好的问题。从开始的 <code>jquery</code> 的原生态开发到 <code>angularjs</code><br>的双向绑定再到部门技术选型从而切到 <code>vuejs</code> （从1到2）再到现在对 <code>react</code>的尝试，<br>可谓是三大框架走了个遍。有些时候不得不感叹 <code>我圈真乱 斜眼笑</code>。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>  因为目前项目使用的 <code>vue</code> 框架，并且对 <code>vue</code> 相关项目配置有所了解，所以项目架构直接采用<br><code>webpack + es2015 + react</code> 构建，并且采用手撸 <code>webpack</code> 配置加深印象。</p>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ul>
+<li><code>mkdir react-map</code> &#x2F;&#x2F; 创建 react-map 文件夹</li>
+<li><code>cd react-map</code> &#x2F;&#x2F; 进入文件夹</li>
+<li>使用 <code>npm init</code> 初始化项目，按需要进行配置。</li>
+</ul>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><ul>
+<li><code>npm install webpack-cli webpack webpack-bundle-analyzer webpack-dev-server webpack-merge uglifyjs-webpack-plugin html-webpack-plugin extract-text-webpack-plugin optimize-css-assets-webpack-plugin friendly-errors-webpack-plugin --save-dev</code> &#x2F;&#x2F; 安装 webpack （目前已升级到 4）</li>
+<li><code>npm install react react-dom --save</code> &#x2F;&#x2F; 参考：<a href="https://facebook.github.io/react/docs/installation.html">https://facebook.github.io/react/docs/installation.html</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>包名</th>
+<th>简介</th>
+<th>作用</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>webpack</code></td>
+<td>模块打包器</td>
+<td>对 <code>react</code> 项目的打包，<code>ES2015+</code> 的代码转换，静态资源处理等</td>
+<td><code>^4.0.1</code></td>
+</tr>
+<tr>
+<td><code>react</code></td>
+<td>js 框架</td>
+<td><code>react</code> 基础框架</td>
+<td><code>^16.2.0</code></td>
+</tr>
+<tr>
+<td><code>react-dom</code></td>
+<td>操作 DOM</td>
+<td>搭配 <code>react</code> 用了操作dom的</td>
+<td><code>^16.2.0</code></td>
+</tr>
+</tbody></table>
+<p>因为需要采用 <code>es2015</code> 语法 所以还应当安装babel-loader以及其他相关依赖, 具体也可以参考 vue 项目配置。</p>
+<ul>
+<li><code>npm install babel-loader babel-core babel-preset-es2015 babel-preset-react babel-eslint --save-dev</code></li>
+</ul>
+<p>样式预处理器保持和现有项目保持一致，任然采用 <code>scss</code>, 但是任然需要处理内联样式和 css 文件。</p>
+<ul>
+<li><code>npm install css-loader style-loader node-sass sass-loader --save-dev</code></li>
+</ul>
+<p>安装 <code>eslint</code> 相关</p>
+<ul>
+<li><code>npm install eslint eslint-config-airbnb eslint-plugin-babel eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-friendly-formatter --save-dev</code></li>
+</ul>
+<p>安装静态文件 loader 相关</p>
+<ul>
+<li><code>npm install url-loader file-loader portfinder --save-dev</code></li>
+<li><code>npm install postcss-url postcss-loader postcss-import autoprefixer --save-dev</code></li>
+</ul>
+<h2 id="webpack-配置"><a href="#webpack-配置" class="headerlink" title="webpack 配置"></a>webpack 配置</h2><blockquote>
+<p>编写对应的webpack 配置</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>front-end</category>
+      </categories>
+      <tags>
+        <tag>react</tag>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>利用travis持续集成工具自动部署博客</title>
+    <url>/2017/04/08/travis/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>  完善一下早期文章。虽然网上已有很多关于博客自动部署的教程，但是真正实践起来并不是一番丰顺。所以<br>将踩过的坑记录下来也是必要的。</p>
+<span id="more"></span>
+
+<h1 id="自动部署方案选择"><a href="#自动部署方案选择" class="headerlink" title="自动部署方案选择"></a>自动部署方案选择</h1><h2 id="Webhook"><a href="#Webhook" class="headerlink" title="Webhook"></a>Webhook</h2><p>  Webhook，也就是人们常说的钩子，是一个很有用的工具。你可以通过定制 Webhook 来监测你在 Github<br>上的各种事件，包括提交合并分支等事件。并且github和gitlab对webhook的支持比较好。<br>  主要思路就是当有新的 <code>push</code> 操作后，触发webhook的回调，进行仓库拉取更新和编译，并且将编译后的<br>文件推送到 <code>git</code> 仓库或者特定服务器上，就完成了自动部署。<br>  但是此方案需要有一个服务器，所以暂时不考虑。</p>
+<h2 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h2><p>  Travis CI 是目前新兴的开源持续集成构建项目。目前我的大多数的github项目都已经移入到Travis CI的构建队列中。</p>
+<h3 id="travis配置"><a href="#travis配置" class="headerlink" title="travis配置"></a>travis配置</h3><ul>
+<li>开启travis中要构建的项目，并指定触发条件。</li>
+</ul>
+<p> <img src="http://oo4em1zi0.bkt.clouddn.com/website/images/travisgitres.jpg" alt="配置"><br> <img src="http://oo4em1zi0.bkt.clouddn.com/website/images/travismenu.jpg" alt="触发条件"></p>
+<ul>
+<li><p>配置环境变量Environment Variables，主要目的是将HEXO_ALGOLIA_INDEXING_KEY(algolia的key)和TRAVIS_GITHUB（Github的Access Token）<br>以私有方式配置到构建环境中。</p>
+</li>
+<li><p>配置 <code>.travis.yml</code> 配置文件, 安装node，配置主题，hexo编译，自动配置algolia搜索字段的更新，将构建结果 <code>push</code><br>到 <code>github</code> 对应仓库。</p>
+</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">language: node_js</span><br><span class="line">node_js: node</span><br><span class="line">cache:</span><br><span class="line">  directories:</span><br><span class="line">    - node_modules</span><br><span class="line">before_install:</span><br><span class="line">- npm install -g hexo-cli</span><br><span class="line">install: npm install</span><br><span class="line">script:</span><br><span class="line">- git <span class="built_in">clone</span> https://github.com/sakitam-fdd/hexo-theme-next.git themes/next</span><br><span class="line">- hexo clean</span><br><span class="line">- hexo generate</span><br><span class="line">- <span class="built_in">export</span> HEXO_ALGOLIA_INDEXING_KEY=<span class="variable">$&#123;HEXO_ALGOLIA_INDEXING_KEY&#125;</span></span><br><span class="line">- hexo algolia</span><br><span class="line">after_script:</span><br><span class="line">- <span class="built_in">cd</span> ./dist</span><br><span class="line">- git init</span><br><span class="line">- git config --global user.name <span class="string">&#x27;sakitam-fdd&#x27;</span></span><br><span class="line">- git config --global user.email <span class="string">&#x27;smilefdd@gmail.com&#x27;</span></span><br><span class="line">- git add .</span><br><span class="line">- git commit -m <span class="string">&quot;update my website&quot;</span></span><br><span class="line">- git push --force --quiet <span class="string">&quot;https://<span class="variable">$&#123;TRAVIS_GITHUB&#125;</span>@github.com/sakitam-fdd/sakitam-fdd.github.io&quot;</span> master:master</span><br></pre></td></tr></table></figure>
+<h2 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h2><p>  推送一篇新主题到 <code>website</code> 仓库，观察 <a href="https://www.travis-ci.org/sakitam-fdd/website">travis-ci</a>构建过程<br>当出现 <code>Done. Your build exited with 0.</code>后表示构建并且更新blog成功，稍等一分钟可以刷新你的blog查看最新结果。</p>
+<p><img src="http://oo4em1zi0.bkt.clouddn.com/website/images/travistravis.jpg" alt="成功"></p>
+]]></content>
+      <categories>
+        <category>前端</category>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>持续集成</tag>
+        <tag>github</tag>
+      </tags>
+  </entry>
+</search>
